@@ -59,25 +59,25 @@ describe('acumbamailApiRequest', () => {
   it('throws readable error on 401', async () => {
     mockHttpRequest.mockRejectedValue({ response: { status: 401 } });
     await expect(acumbamailApiRequest.call(mockContext, 'getLists'))
-      .rejects.toThrow('Token de autenticación inválido');
+      .rejects.toThrow('Invalid authentication token');
   });
 
   it('throws readable error on 403', async () => {
     mockHttpRequest.mockRejectedValue({ response: { status: 403 } });
     await expect(acumbamailApiRequest.call(mockContext, 'getLists'))
-      .rejects.toThrow('Token de autenticación inválido');
+      .rejects.toThrow('Invalid authentication token');
   });
 
   it('throws readable error on 429', async () => {
     mockHttpRequest.mockRejectedValue({ response: { status: 429 } });
     await expect(acumbamailApiRequest.call(mockContext, 'getLists'))
-      .rejects.toThrow('Rate limit');
+      .rejects.toThrow('Rate limit exceeded');
   });
 
   it('throws readable error on 500', async () => {
     mockHttpRequest.mockRejectedValue({ response: { status: 500 } });
     await expect(acumbamailApiRequest.call(mockContext, 'getLists'))
-      .rejects.toThrow('Error del servidor');
+      .rejects.toThrow('Server error');
   });
 
   it('re-throws unrecognized errors', async () => {

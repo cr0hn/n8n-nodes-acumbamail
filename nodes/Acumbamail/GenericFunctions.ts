@@ -35,13 +35,13 @@ export async function acumbamailApiRequest(
       (err.statusCode as number | undefined);
 
     if (status === 401 || status === 403) {
-      throw new Error('Acumbamail: Token de autenticación inválido');
+      throw new Error('Acumbamail: Invalid authentication token');
     }
     if (status === 429) {
-      throw new Error('Acumbamail: Rate limit alcanzado (máx. 10 req/min por endpoint)');
+      throw new Error('Acumbamail: Rate limit exceeded (max 10 req/min per endpoint)');
     }
     if (status !== undefined && status >= 500) {
-      throw new Error(`Acumbamail: Error del servidor (${status})`);
+      throw new Error(`Acumbamail: Server error (${status})`);
     }
     throw error;
   }
