@@ -4,7 +4,7 @@ module.exports = {
   testMatch: ['**/*.test.ts'],
   transform: {
     '^.+\\.tsx?$': ['ts-jest', {
-      tsconfig: { target: 'ES2019', module: 'commonjs', strict: true, skipLibCheck: true }
+      tsconfig: '<rootDir>/tsconfig.test.json',
     }]
   }
 };
