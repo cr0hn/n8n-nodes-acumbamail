@@ -1,0 +1,106 @@
+import { INodeProperties } from 'n8n-workflow';
+
+export const listOperations: INodeProperties[] = [
+  {
+    displayName: 'Operation',
+    name: 'operation',
+    type: 'options',
+    noDataExpression: true,
+    displayOptions: { show: { resource: ['list'] } },
+    options: [
+      { name: 'Add Merge Tag', value: 'addMergeTag', description: 'Add a custom merge tag field to a list', action: 'Add merge tag to a list' },
+      { name: 'Create', value: 'create', description: 'Create a new mailing list', action: 'Create a list' },
+      { name: 'Delete', value: 'delete', description: 'Delete a mailing list', action: 'Delete a list' },
+      { name: 'Get All', value: 'getAll', description: 'Get all mailing lists', action: 'Get all lists' },
+      { name: 'Get Field Types', value: 'getFieldTypes', description: 'Get field name to type mapping for a list', action: 'Get field types of a list' },
+      { name: 'Get Fields', value: 'getFields', description: 'Get custom fields of a list', action: 'Get fields of a list' },
+      { name: 'Get Forms', value: 'getForms', description: 'Get subscription forms for a list', action: 'Get forms of a list' },
+      { name: 'Get Merge Fields', value: 'getMergeFields', description: 'Get merge fields (personalization tags) for a list', action: 'Get merge fields of a list' },
+      { name: 'Get Segments', value: 'getSegments', description: 'Get segments of a list', action: 'Get segments of a list' },
+      { name: 'Get Stats', value: 'getStats', description: 'Get statistics for a list', action: 'Get stats of a list' },
+      { name: 'Get Subs Stats', value: 'getSubsStats', description: 'Get paginated subscriber statistics for a list', action: 'Get subscriber stats of a list' },
+    ],
+    default: 'getAll',
+  },
+];
+
+export const listFields: INodeProperties[] = [
+  {
+    displayName: 'List ID',
+    name: 'listId',
+    type: 'string',
+    required: true,
+    displayOptions: {
+      show: {
+        resource: ['list'],
+        operation: ['delete', 'getStats', 'getFields', 'getFieldTypes', 'getSegments', 'getMergeFields', 'addMergeTag', 'getSubsStats', 'getForms'],
+      },
+    },
+    default: '',
+    description: 'ID of the mailing list',
+  },
+  {
+    displayName: 'Name',
+    name: 'name',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['list'], operation: ['create'] } },
+    default: '',
+    description: 'Name of the new mailing list',
+  },
+  {
+    displayName: 'Sender Email',
+    name: 'senderEmail',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['list'], operation: ['create'] } },
+    default: '',
+    description: 'Default sender email address for campaigns sent to this list',
+  },
+  {
+    displayName: 'Additional Fields',
+    name: 'additionalFields',
+    type: 'collection',
+    placeholder: 'Add Field',
+    displayOptions: { show: { resource: ['list'], operation: ['create'] } },
+    default: {},
+    options: [
+      { displayName: 'Company', name: 'company', type: 'string', default: '', description: 'Company name for the sender' },
+      { displayName: 'Country', name: 'country', type: 'string', default: 'ES', description: 'ISO country code for the sender (default: ES)' },
+      { displayName: 'Description', name: 'description', type: 'string', default: '', description: 'Description of the mailing list' },
+      { displayName: 'Sender Name', name: 'sender_name', type: 'string', default: '', description: 'Default sender name for campaigns' },
+    ],
+  },
+  {
+    displayName: 'Field Name',
+    name: 'fieldName',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['list'], operation: ['addMergeTag'] } },
+    default: '',
+    description: 'Name of the new merge tag field',
+  },
+  {
+    displayName: 'Field Type',
+    name: 'fieldType',
+    type: 'options',
+    required: true,
+    displayOptions: { show: { resource: ['list'], operation: ['addMergeTag'] } },
+    options: [
+      { name: 'Boolean', value: 'boolean' },
+      { name: 'Date', value: 'date' },
+      { name: 'Number', value: 'number' },
+      { name: 'Text', value: 'text' },
+    ],
+    default: 'text',
+    description: 'Data type of the merge tag field',
+  },
+  {
+    displayName: 'Block Index',
+    name: 'blockIndex',
+    type: 'number',
+    displayOptions: { show: { resource: ['list'], operation: ['getSubsStats'] } },
+    default: 0,
+    description: 'Pagination block index (0-based)',
+  },
+];
