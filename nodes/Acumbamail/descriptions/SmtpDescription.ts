@@ -1,0 +1,93 @@
+import { INodeProperties } from 'n8n-workflow';
+
+export const smtpOperations: INodeProperties[] = [
+  {
+    displayName: 'Operation',
+    name: 'operation',
+    type: 'options',
+    noDataExpression: true,
+    displayOptions: { show: { resource: ['smtp'] } },
+    options: [
+      { name: 'Get Credits', value: 'getCredits', description: 'Get remaining SMTP credits', action: 'Get SMTP credits' },
+      { name: 'Get Status', value: 'getStatus', description: 'Get delivery status of a sent email', action: 'Get email status' },
+      { name: 'Send Batch', value: 'sendBatch', description: 'Send multiple emails in one request', action: 'Send batch emails' },
+      { name: 'Send Certified Email', value: 'sendCertified', description: 'Send a certified email with optional CC/BCC', action: 'Send certified email' },
+      { name: 'Send Email', value: 'sendEmail', description: 'Send a single transactional email', action: 'Send a single email' },
+    ],
+    default: 'sendEmail',
+  },
+];
+
+export const smtpFields: INodeProperties[] = [
+  {
+    displayName: 'To Email',
+    name: 'toEmail',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['smtp'], operation: ['sendEmail', 'sendCertified'] } },
+    default: '',
+    placeholder: 'recipient@example.com',
+    description: 'Recipient email address',
+  },
+  {
+    displayName: 'Subject',
+    name: 'emailSubject',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['smtp'], operation: ['sendEmail', 'sendCertified'] } },
+    default: '',
+    description: 'Email subject line',
+  },
+  {
+    displayName: 'Content (HTML)',
+    name: 'emailContent',
+    type: 'string',
+    required: true,
+    typeOptions: { rows: 5 },
+    displayOptions: { show: { resource: ['smtp'], operation: ['sendEmail', 'sendCertified'] } },
+    default: '',
+    description: 'HTML body of the email',
+  },
+  {
+    displayName: 'From Email',
+    name: 'fromEmail',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['smtp'], operation: ['sendEmail', 'sendCertified'] } },
+    default: '',
+    placeholder: 'sender@example.com',
+    description: 'Sender email address',
+  },
+  {
+    displayName: 'Additional Fields',
+    name: 'additionalFields',
+    type: 'collection',
+    placeholder: 'Add Field',
+    displayOptions: { show: { resource: ['smtp'], operation: ['sendEmail', 'sendCertified'] } },
+    default: {},
+    options: [
+      { displayName: 'BCC Email', name: 'bcc_email', type: 'string', default: '', description: 'BCC email address (sendCertified only)' },
+      { displayName: 'CC Email', name: 'cc_email', type: 'string', default: '', description: 'CC email address (sendCertified only)' },
+      { displayName: 'Category', name: 'category', type: 'string', default: '', description: 'Category label for analytics' },
+      { displayName: 'From Name', name: 'from_name', type: 'string', default: '', description: 'Sender name displayed in the From field' },
+    ],
+  },
+  {
+    displayName: 'Messages',
+    name: 'messages',
+    type: 'json',
+    required: true,
+    displayOptions: { show: { resource: ['smtp'], operation: ['sendBatch'] } },
+    default: '[]',
+    description: 'JSON array of message objects. Each object must have: to_email, subject, body, from_email.',
+  },
+  {
+    displayName: 'Email Key',
+    name: 'emailKey',
+    type: 'string',
+    required: true,
+    displayOptions: { show: { resource: ['smtp'], operation: ['getStatus'] } },
+    default: '',
+    description: 'Unique key of the sent email (returned by sendEmail or sendCertified)',
+  },
+];
