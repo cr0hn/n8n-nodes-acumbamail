@@ -1,0 +1,48 @@
+{
+  "name": "n8n-nodes-acumbamail",
+  "version": "0.1.0",
+  "description": "n8n community node for Acumbamail email marketing",
+  "keywords": ["n8n-community-node-package", "acumbamail", "email-marketing", "newsletter"],
+  "license": "MIT",
+  "homepage": "https://github.com/cr0hn/n8n-nodes-acumbamail",
+  "author": {
+    "name": "Dani",
+    "email": "cr0hn@cr0hn.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cr0hn/n8n-nodes-acumbamail.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "lint": "eslint nodes credentials --ext .ts",
+    "prepublishOnly": "npm run build && npm run lint && npm run test",
+    "test": "jest --testPathPattern=unit",
+    "test:integration": "jest --testPathPattern=integration --runInBand"
+  },
+  "files": ["dist"],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/AcumbamailApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Acumbamail/Acumbamail.node.js",
+      "dist/nodes/AcumbamailTrigger/AcumbamailTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.0",
+    "gulp": "^4.0.2",
+    "jest": "^29.7.0",
+    "n8n-workflow": "^1.0.0",
+    "ts-jest": "^29.2.3",
+    "typescript": "^5.5.4"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
